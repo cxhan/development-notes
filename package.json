@@ -5,8 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "vuepress dev docs",
-    "build": "vuepress build docs",
-    "server": "npm run build && pm2 start blog.js"
+    "build": "vuepress build docs"
   },
   "keywords": [],
   "author": "Feng L.H.",
