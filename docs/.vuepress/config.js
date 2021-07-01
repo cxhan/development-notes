@@ -1,7 +1,7 @@
 module.exports = {
   theme:"antdocs",
   title: "忘忧客の个人空间",
-  description: "记录我的工作、学习、生活。",
+  description: "记录我的工作、学习、生活666。",
   base: "/",
   dest: "./dist",
   head: [
