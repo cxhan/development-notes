@@ -1,4 +1,5 @@
 module.exports = [
 	"/pages/front/",
-	"front-demo",
+	"e001-interview",
+	"e002-cli",
 ];
