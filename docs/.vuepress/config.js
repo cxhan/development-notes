@@ -18,4 +18,7 @@ module.exports = {
     repo: "https://github.com/cxhan",
     editLinks: false,
   },
+  plugins: [
+    'vuepress-plugin-mermaidjs'
+  ]
 };
