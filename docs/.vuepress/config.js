@@ -19,6 +19,7 @@ module.exports = {
     editLinks: false,
   },
   plugins: [
-    'vuepress-plugin-mermaidjs'
+    'vuepress-plugin-mermaidjs',
+    '@vuepress/plugin-back-to-top@next'
   ]
 };
