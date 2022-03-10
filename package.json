@@ -11,7 +11,8 @@
   "author": "Han Chaoxi",
   "license": "MIT",
   "devDependencies": {
-    "@vuepress/plugin-back-to-top": "^2.0.0-beta.36",
+    "@vuepress/plugin-back-to-top": "^1.9.7",
+    "@vuepress/plugin-nprogress": "^1.9.7",
     "vuepress": "^1.5.2",
     "vuepress-plugin-mermaidjs": "^1.9.0"
   },
