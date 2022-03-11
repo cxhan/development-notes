@@ -26,13 +26,25 @@ title: 前端面试题整理
 ## vue基础
 
 1. 简要说一下vue的响应式原理
+
 2. 说下一下vue中常用的内置指令
+
 3. vue这些MVVM框架都有个声明周期的概念，我想问的是在vue中，父子关系的组件，在组件挂载和更新的两个阶段，created，mounted，updated分别是怎么调用的
+
 4. vue组件中参数是怎么传递的，父子、子子、不相关组件都说一下？
-5. \$nextTick这个api使用场景是什么？知道原理吗？
-6. vue中怎么实现路由的拦截，简单点说就是vue-router有哪些守卫函数？
-7. 做过哪些性能优化的工作
-8. vue中如何实现逻辑复用的，有哪些方式？
+
+5. 使用 Vuex 只需执行 Vue.use(Vuex)，并在 Vue 的配置中传入一个 store 对象的示例，store 是如何实现注入的？
+
+   > Vue.use(Vuex) 方法执行的是 install 方法，它实现了 Vue 实例对象的 init 方法封装和注入，使传入的 store 对象被设置到 Vue 上下文环境的store中。因此在VueComponent任意地方都能够通过this.store 访问到该 store。
+
+6. \$nextTick这个api使用场景是什么？知道原理吗？
+
+7. vue中怎么实现路由的拦截，简单点说就是vue-router有哪些守卫函数？
+
+8. 做过哪些性能优化的工作
+
+9. vue中如何实现逻辑复用的，有哪些方式？
+
 9. vue3或者react、react-hook有使用过吗，说下一下和vue2的差别呢，可以从响应式、逻辑复用
 
 ## 其他

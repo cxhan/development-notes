@@ -147,7 +147,7 @@ if(options.length > 1) {
 
    
 
-4. Lerna create {packageName}
+4. lerna create {packageName}
 
    > packageName是指packages目录中的包对应package的文件名，libName是指需要安装的三方包的名字
 
