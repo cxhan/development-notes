@@ -2,6 +2,8 @@
 title: 前端面试题整理
 ---
 
+[TOC]
+
 # 前端面试题整理
 
 ## html&&css
@@ -21,7 +23,12 @@ title: 前端面试题整理
    <summary>3. css选择器的优先级算法是怎么计算的？</summary>
    * 问题3答案
 </details>
-
+<details>
+  <summary>4. 不知道是什么问题，随便弄的？</summary>
+  <code>
+  hahaha
+  </code>
+</details>
 
 
 ## js基础
@@ -36,10 +43,10 @@ title: 前端面试题整理
 
 5. 下面这段代码解释一下是什么意思？
 
-   ```
+   ```javascript
    [].forEach.call($$("*"),function(a){
     　　a.style.outline="1px solid #"+(~~(Math.random()*(1<<24))).toString(16);
-    })
+   })
    ```
 
    
