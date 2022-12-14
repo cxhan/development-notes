@@ -69,3 +69,4 @@ package-lock.json
 
 # useless files
 templete
+dist
