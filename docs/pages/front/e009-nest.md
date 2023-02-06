@@ -1,13 +1,11 @@
 ---
-title: 前端面试八股文
+title: NestJS笔记
 ---
 
 [TOC]
 
-# 前端面试八股文
+## 前端面试八股文
 
-
-**背就行了，不用太动脑子**
 ## html&&css
 
 <details>
@@ -19,7 +17,7 @@ title: 前端面试八股文
 </details>
 <details>
    <summary>2. css有哪些属性是可以继承的</summary>
-   * 问题2答案
+   *问题2答案
 </details>
 <details>
    <summary>3. css选择器的优先级算法是怎么计算的？</summary>
@@ -31,7 +29,6 @@ title: 前端面试八股文
   hahaha
   </code>
 </details>
-
 
 ## js基础
 
@@ -51,8 +48,6 @@ title: 前端面试八股文
    })
    ```
 
-   
-
 6. 说一下xmlhttprequest向服务端发起请求到收到响应的全过程
 
 7. 能说一下浏览器的同源策略吗，为什么会有这个机制？
@@ -64,8 +59,6 @@ title: 前端面试八股文
 10. 前端性能监控的时候，有一个概念就是白屏时间、首屏时间，如何量化？
 
 11. canvas的常用api?
-
-10. js延迟加载有哪些方式
 
 12. > js 延迟加载，也就是等页面加载完成之后再加载 JavaScript 文件。 
     >
@@ -79,10 +72,6 @@ title: 前端面试八股文
     > * setTimeout延迟
     > * 让js最后加载
 
-    
-
-
-
 ## vue基础
 
 1. 简要说一下vue的响应式原理
@@ -92,8 +81,6 @@ title: 前端面试八股文
 3. vue这些MVVM框架都有个声明周期的概念，我想问的是在vue中，父子关系的组件，在组件挂载和更新的两个阶段，created，mounted，updated分别是怎么调用的
 
 4. vue中参数是怎么传递的，父子、子子或者全局的数据的透传都可以说一下？
-
-   
 
 5. 使用 Vuex 只需执行 Vue.use(Vuex)，并在 Vue 的配置中传入一个 store 对象的示例，store 是如何实现注入的？
 
@@ -107,7 +94,7 @@ title: 前端面试八股文
 
 9. vue中如何实现逻辑复用的，有哪些方式？
 
-9. vue3或者react、react-hook有使用过吗，说下一下和vue2的差别呢，可以从响应式、逻辑复用
+10. vue3或者react、react-hook有使用过吗，说下一下和vue2的差别呢，可以从响应式、逻辑复用
 
 ## react基础
 
@@ -135,16 +122,3 @@ title: 前端面试八股文
 1. 前端工程化的相关工作有接触过吗？
 2. 平常你做项目的过程中，你觉得最有挑战性的事情或者说是你做的最好的点，能跟我说一下吗？
 3. 有什么想问我的吗？
-
-## Q&A
-
-<details>
-   <summary>问题1</summary>
-   * 问题1答案1-1
-   * 问题1答案1-2
-</details>
-
-<details>
-   <summary>问题2</summary>
-   问题2答案
-</details>
