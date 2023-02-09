@@ -2,6 +2,8 @@
 title: mermaid插件使用
 ---
 
+[TOC]
+
 # mermaid插件使用
 
 mermaid是 我们撰写markdown文档时最常用到的图表插件，下面主要介绍一下日常用到的流程图、思维导图、时序图三种图表的常规写法
