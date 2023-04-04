@@ -8,24 +8,6 @@ title: flutter移动端模板
 
 > 该模板旨在搭建一个符合前端开发习惯的flutter移动端模板
 
-* 模板目录结构
-
-* 路由的使用
-
-* 全局状态管理
-
-* 数据持久化
-
-* 网络请求
-
-* 国际化配置
-
-* 其他自定义配置
-
-* 打包配置
-
-  
-
 ## 模板目录结构
 
 ```dart
@@ -117,7 +99,7 @@ Navigator.of(context).pushNamed(AppRouter.homeRoute); //路由添加
 Navigator.of(context).pop(); //路由回退
 ```
 
-
+如果要实现更加丰富的路由跳转，譬如动态路由和路由切换动效等可以使用`fluro`库，这里就不做过多的赘述。
 
 ## 全局状态管理
 
@@ -503,6 +485,62 @@ return const MaterialApp(
    ...
    ```
 
+3. 为了方便监听l10n目录下文件的改动自动生成国际化文件，可以使用fswatch插件
+
+```shell
+# mac下安装fswatch
+brew install fswatch
+
+# fswatch监听目录的改动
+fswatch $DIR | while read file;
+do
+	echo "$file changed."
+	# 监听到文件变动执行l10n生成命令，在实际的项目中需要把这个命令放到另一个脚本中执行，避免因为命令执行错误导致退出监听
+	exec flutter gen-l10n 
+done
+```
+
+
+
+## 自定义字体
+
+1. flutter支持的字体格式有`.otf`、`.ttf`、`.ttc`。
+2. pubsepc.yaml中声明字体
+
+```yaml
+flutter:
+  fonts:
+    - family: Alkatra-Bold
+      fonts:
+        - asset: lib/src/assets/fonts/Alkatra-Bold.ttf //字体文件位置
+          style: normal //字体轮廓
+          weight: 700 //字重
+```
+
+3. 全局默认字体
+
+```dart
+return MaterialApp(
+  theme: ThemeData(fontFamily: 'Alkatra-Regular'), //设置默认字体
+  home: const MyHomePage(),
+);
+```
+
+4. 使用字体
+
+```dart
+Text(
+  'abcdefg',
+  style: const TextStyle(
+    color: AppColor.primaryTextColor,
+    fontSize: 16,
+    fontFamily: 'Alkatra-Bold', //使用自定义字体
+  ),
+)
+```
+
+
+
 ## 其他自定义配置
 
 1. 闪屏页，用到`flutter_native_splash`库做静态闪屏页，其他的动态闪屏页也有`animated_splash_screen`方案。
@@ -688,7 +726,7 @@ flutter_native_splash:
 
 ## 应用打包
 
-to be continued ...
+To be continued ...
 
 
 
@@ -736,6 +774,3 @@ flutter:
     - lib/src/assets/logo.png
 ```
 
-
-
-<a href="https://github.com/cxhan" target="_blank"><img src="../../assets/logo.png" style="max-width: 600px;margin: 0 auto;display: block;"/></a>
