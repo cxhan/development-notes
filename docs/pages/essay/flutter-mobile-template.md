@@ -63,8 +63,6 @@ flutter_mobile_template
 先封装一个AppRouter类
 
 ```dart
-// lib/routes/router.dart
-
 // 具名路由封装
 class AppRouter {
   // 初始化路由
@@ -91,15 +89,34 @@ MaterialApp(
 ）
 ```
 
-路由的跳转通过Navigator类进行
+路由的跳转通过Navigator类进行，动态参数传递通过`arguments`参数。
 
 ```dart
-Navigator.of(context).popAndPushNamed(AppRouter.homeRoute); //路由替换
-Navigator.of(context).pushNamed(AppRouter.homeRoute); //路由添加
+Navigator.push(
+  context,
+  MaterialPageRoute(
+      builder: (context) => const HybridH5(url: 'https://www.baidu.com')
+  )
+); //普通路由的跳转方式
+Navigator.of(context).popAndPushNamed(AppRouter.homeRoute); //具名路由替换
+Navigator.of(context).pushNamed(AppRouter.homeRoute); //具名路由添加
+
 Navigator.of(context).pop(); //路由回退
+
+// 传递id
+Navigator.of(context).popAndPushNamed(
+  AppRouter.homeRoute,
+  arguments: {
+    'id': 'xxx-id',
+  }
+);
+// 在要push的路由中获取参数id
+final args = ModalRoute.of(context)!.settings.arguments;
 ```
 
-如果要实现更加丰富的路由跳转，譬如动态路由和路由切换动效等可以使用`fluro`库，这里就不做过多的赘述。
+> `pushNamed`和`push`一定要慎用，除非很确定push的路由一定会pop不然不要调用此方法，否则会导致路由栈积压过多。
+
+如果应用的体量比较大，而且在路由切换时需要更加丰富的动效，建议使用[`fluro`](https://pub.dev/packages/fluro)这个类库，这里就不做过多的赘述。
 
 ## 全局状态管理
 

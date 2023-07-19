@@ -12,7 +12,7 @@ title: flutter ui build
 
 ##### Container & SizedBox
 
-如果只是要给组件设置宽高，不需设置对齐样式、背景色和边框样式就用SizedBox,反之则用Container,另外SizedBox也可以用来填充不同组件之间的空白（类似web中的margin）。
+如果只是要给组件设置宽高，不需设置对齐样式、背景色和边框样式就用SizedBox,反之则用Container,另外SizedBox也可以用来填充不同组件之间的空白（类似web中的margin），其他的内边距和对齐都可以在Container上设置属性，不建议使用Padding和Align组件。
 
 ```dart
 ...
@@ -21,6 +21,7 @@ title: flutter ui build
   	height: double.infinity,
   	child: ...
 	),
+
   ...
   const Container(
 		width: double.infinity, //可以不用设置默认撑满父组件的宽度
@@ -151,7 +152,7 @@ Stack(children: [
 
 ## 性能优化和监控
 
-1. 细粒度的UI渲染，由于机制问题，在父组件的build方法中setState会导致子组件的build方法被频繁调用，所以不要再父组件中setState，最好使用Provider/Selector、ValueNotifier对UI进行更精细的操作。
+1. 细粒度的UI渲染，由于机制问题，在父组件的build方法中setState会导致子组件的build方法被频繁调用，所以不要再父组件中setState，最好使用Provider/Selector、ValueNotifier对UI进行更精细的操作，保证数据操作没有传染性。
 
 ```dart
 ValueNotifier<double?> sliderXListener = ValueNotifier<double?>(_sliderX);
@@ -173,7 +174,7 @@ ValueNotifier<double?> sliderXListener = ValueNotifier<double?>(_sliderX);
 ...
 ```
 
-2. dispose中优化计时器
+2. dispose中优化计时器，组件的dispose并不会自动的回收计时器占用的内存必须手动来清除（特殊情况除外，譬如需要定时修改全局provider的需求，要显示未读消息气泡这种）。
 
 ```dart
 late Timer? _timer;
@@ -200,7 +201,6 @@ void dispose() {
 <img src="flutter-ui-build/image-20230404144521713.png" alt="image-20230404144521713" style="zoom:50%;" />
 
 监控模块有两层，上面的是GPU帧率，下方的是UI帧率表示当前帧的绘制时间，红色表示当前帧的绘制时间超过16ms
-
 
 ## Null safety（空安全）
 
@@ -232,3 +232,109 @@ if(str!.length > 0) {
 4. <img src="flutter-ui-build/image-20230404152819685.png" alt="image-20230404152819685" style="zoom:50%;" />
 
 想要调用toList方法转换成自定义的List<T>,需要将map方法返回的值强制转换一下类型，这里就是`e['widget'] as BottomNavigationBarItem`。
+
+## WebView
+
+基于`webview_flutter`插件，自定义`HybridH5`组件，需要注意的是H5调用App的方法是通过`addJavaScriptChannel`添加postMessage的信道，然后执行回调函数来调用app的方法，而App调用H5页面的方法是直接执行一段Javascript脚本（如果不需要获取返回结果调用`runJavaScript`方法，如果要获取结果则使用`runJavaScriptReturningResult`方法）。
+
+代码如下：
+
+```dart
+import 'package:bruno/bruno.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_mobile_template/src/constants/colors.dart';
+import 'package:oktoast/oktoast.dart';
+import 'package:webview_flutter/webview_flutter.dart';
+
+class HybridH5 extends StatefulWidget {
+  final String url;
+  const HybridH5({super.key, required this.url});
+
+  @override
+  State<StatefulWidget> createState() => _HybridH5State();
+}
+
+class _HybridH5State extends State<HybridH5> {
+  WebViewController controller = WebViewController();
+  String title = '加载中...';
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    ValueNotifier<String> titleListener = ValueNotifier<String>(title);
+    controller
+      // FOCUS 添加js通信channel
+      ..addJavaScriptChannel('AppToaster',
+          onMessageReceived: (JavaScriptMessage p) {
+        showToast(p.message);
+      })
+      ..setJavaScriptMode(JavaScriptMode.unrestricted)
+      ..setBackgroundColor(const Color(0x00000000))
+      ..setNavigationDelegate(
+        NavigationDelegate(
+          onProgress: (int progress) {},
+          onPageStarted: (String url) {},
+          onPageFinished: (String url) {
+            controller.runJavaScript('''
+              window.AppToaster.postMessage('toast from flutter!');
+            ''');
+            controller.runJavaScriptReturningResult('''
+              document.title;
+            ''').then((value) {
+              title = value.toString();
+              titleListener.value = value.toString();
+            });
+          },
+          onWebResourceError: (WebResourceError error) {},
+          onNavigationRequest: (NavigationRequest request) {
+            // 可以自定义拦截规则，比如拦截app://开头的url，这就赋予了webview打开app内部页面的能力
+            // if (request.url.startsWith('app://')) {
+            //   String routePath = request.url.substring(6);
+            //   Navigator.of(context).pushNamed(routePath);
+            // }
+            return NavigationDecision.navigate;
+          },
+        ),
+      )
+      ..loadRequest(Uri.parse(widget.url));
+
+    return Scaffold(
+      appBar: BrnAppBar(
+        title: ValueListenableBuilder(
+            valueListenable: titleListener,
+            builder: (BuildContext context, value, child) {
+              return Text(title, style: const TextStyle(color: AppColor.white));
+            }),
+        // automaticallyImplyLeading: false,
+        backgroundColor: AppColor.primaryColor,
+      ),
+      body: WebViewWidget(controller: controller),
+    );
+  }
+}
+
+```
+
+在需要跳转的地方，用`MaterialPageRoute`组件包裹住WebView，直接调用flutter路由跳转方法跳转指定url的h5页面即可。
+
+```dart
+... 
+	OutlinedButton(
+    onPressed: () {
+      Navigator.push(
+          context,
+          MaterialPageRoute( //
+              builder: (context) => const HybridH5(
+                  url: 'https://www.baidu.com')));
+    },
+    child: const Text(
+      '打开webview',
+      style: TextStyle(color: AppColor.primaryColor),
+    ),
+  )
+...
+```
