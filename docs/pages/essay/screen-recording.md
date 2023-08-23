@@ -90,8 +90,6 @@ btn.onclick = function() {
 }
 ```
 
-
-
 ##### cursor
 
 cursor是一个迭代器，标记是否有符合条件的索引记录或者objectStore记录，通过openCursor()和openKeyCursor()方法调用

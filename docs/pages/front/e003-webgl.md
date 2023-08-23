@@ -4,7 +4,6 @@ title: WebGL入门
 
 # WebGL入门
 
-
 ## cli初识
 
 ##### cli应包含的内容
@@ -23,8 +22,6 @@ title: WebGL入门
 
 - jenkins、travis等在git hooks中触发，服务端执行，只能覆盖云构建的操作，无法覆盖本地的内容，例如创建项目、组件自动化，本地git操作自动化
 - 定制复杂，CI/CD插件开发较复杂，cli开发的模式前端开发较熟悉上手会比较快
-
-
 
 ## cli基本原理
 
@@ -56,17 +53,11 @@ vue create test-app --force true(默认值为true可不设置)
 - 全局安装@vue/cli的时候发生了什么？npm会通过ln命令生成一个软链接来对应package.json中bin参数设置的所有主命令及其文件
 - 为什么可以直接通过node来执行vue.js而不需要指定node参数？因为vue.js首行通过#!/usr/bin/env node来指定了node来执行该文件，**env是指在环境变量中找到node来执行文件**
 
-
-
 ## cli可以实现的内容
-
-
 
 - 命令行交互（条件分支选择）
 - 网络通信（根据选择模板的不同去拉取不同的仓库代码）
 - 文件操作（根据用户输入实现不同的文件修改）
-
-
 
 ## cli本地调试方法
 
@@ -75,8 +66,6 @@ vue create test-app --force true(默认值为true可不设置)
 3. 在cli项目中执行命令npm link {libName}来链接本地库
 4. 在package.json的引用中手动添加项目名称和版本号，否则上线之后无法install
 5. 项目publish前在lib、cli项目中都要unlink调试的项目
-
-
 
 ## cli命令注册和参数解析
 
@@ -96,13 +85,9 @@ if(options.length > 1) {
 }
 ```
 
-
-
 > 自研cli不通过包管理的话，各个分包之间 调试和版本管理都会遇到各种问题，所以一般研发中我们都通过lerna来管理多package的npm项目
 
 ## lerna管理npm项目
-
-
 
 ##### 为什么要用lerna
 
@@ -145,8 +130,6 @@ if(options.length > 1) {
    
    ```
 
-   
-
 4. lerna create {packageName}
 
    > packageName是指packages目录中的包对应package的文件名，libName是指需要安装的三方包的名字
@@ -161,15 +144,9 @@ if(options.length > 1) {
 
 9. lerna publish（publish的时候可能会遇到git的各种问题，建议在项目初期先排错解决问题之后再进行之后的开发）
 
-
-
 *以上就是开发前端脚手架需要的基础知识，下面我们来进行脚手架的设计和具体的开发。*
 
-
-
 ## 需求分析&架构设计
-
-
 
 ```mermaid
 graph TB
@@ -182,8 +159,6 @@ B1(开始) --> B2(pkg版本开始) --> B3(pkg版本BB)
 end
 ```
 
-
-
 先想再写，做好设计再开发，很多人说前端没有架构
 
 Import-local /local dependencies/Promise chain学以致用
@@ -193,7 +168,5 @@ Import-local /local dependencies/Promise chain学以致用
 前端开发做自己的PD
 
 制定标准的git操作流程并集成到脚手架，固化操作流程
-
-
 
 Commander.js +inquire.js
